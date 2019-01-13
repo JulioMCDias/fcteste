@@ -1,0 +1,62 @@
+/*
+* GNU General Public License v3.0
+* Date: 13 January 2019
+* Author: RDias
+*/
+
+
+
+options{
+STATIC = false;
+//DEBUG_LOOKAHEAD = true;
+}
+
+PARSER_BEGIN(CodeAnalyzer)
+
+/** Simple brace matcher. */
+public class CodeAnalyzer {
+    
+}
+
+PARSER_END(CodeAnalyzer)
+
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN :
+{
+  <END: "EOF">
+
+| <PARENT_ABRE: "(">
+| <PARENT_FECHA: ")">
+  
+| <SOMA: "+">
+| <SUBUTRACAO: "-">
+| <DIVISAO: "/">
+| <MULTIPLICACAO: "*">
+| <MODULO: "%">
+
+| <OPERANDO: (<NUM>|<VAR>|<FUNC>)>
+
+| <NUM: (["0"-"9"])+>
+| <FUNC: <TEXT>"("(<TEXT>)*")">
+| <VAR: <TEXT>>
+
+|<TEXT: ((["a"-"z","A"-"Z"])+(["0"-"9"])*)>
+}
+
+
+
+
+
+void run() :
+{}
+{
+    <SOMA>
+}

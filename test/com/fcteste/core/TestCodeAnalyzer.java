@@ -135,6 +135,10 @@ public class TestCodeAnalyzer {
         String expression = "area=pi*r^2";
     }
     
+    public void AssignmentOperation() {
+        String expression = "count+=2";
+    }
+    
     
     
     /*
@@ -180,6 +184,11 @@ public class TestCodeAnalyzer {
     @Test
     public void CompareOr() {
         String expression = "5+2||10";
+    }
+    
+    @Test
+    public void CompareXor() {
+        String expression = "5+2^^10";
     }
     
     @Test
@@ -273,4 +282,33 @@ public class TestCodeAnalyzer {
         String expression = "5+(-2)*(5&(-2*4)*7) && (7/2*4) || (7^5)";
     }
     
+    
+    
+    /*
+    *
+    * Line numbers
+    *
+    */
+    @Test
+    public void LineNumberAll() {
+        String expression = "5+7\n78+8\nfun()\n";
+    }
+    
+    
+    @Test
+    public void LineNumberBlank() {
+        String expression = "5+7\n\nfun()\n\n";
+    }
+    
+    
+    /*
+    *
+    * Command numbers
+    *
+    */
+    @Test
+    public void CommandNumber() {
+        String expression = "c=10-2;\nfunc();\n";
+    }
+      
 }

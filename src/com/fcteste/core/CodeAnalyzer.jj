@@ -13,9 +13,36 @@ STATIC = false;
 
 PARSER_BEGIN(CodeAnalyzer)
 
-/** Simple brace matcher. */
 public class CodeAnalyzer {
     
+    public class Count{
+        protected int opSum = 0;
+        protected int opSubtrac = 0;
+        protected int opMultiplication = 0;
+        protected int opDivision = 0;
+        protected int opModule = 0;
+        protected int opXor = 0;
+        protected int opAnd = 0;
+        protected int opOr = 0;
+        protected int opNot = 0;
+        
+        protected int operator = 0;
+        protected int operatorOnly = 0;
+        protected int operating = 0;
+        
+        protected int lineAll = 0;
+        protected int lineBlank = 0;
+        protected int command = 0;
+    };
+    
+    public Count count = new Count();
+    
+    
+    /** Main to debug. */
+    public static void main(String args[]) throws ParseException {
+        CodeAnalyzer parser = new CodeAnalyzer(System.in);
+        parser.run();
+    }
 }
 
 PARSER_END(CodeAnalyzer)
@@ -25,38 +52,97 @@ SKIP :
 {
   " "
 | "\t"
-| "\n"
 | "\r"
 }
 
 TOKEN :
 {
   <END: "EOF">
-
-| <PARENT_ABRE: "(">
-| <PARENT_FECHA: ")">
   
-| <SOMA: "+">
-| <SUBUTRACAO: "-">
-| <DIVISAO: "/">
-| <MULTIPLICACAO: "*">
-| <MODULO: "%">
+| <NLINE: "\n">
 
-| <OPERANDO: (<NUM>|<VAR>|<FUNC>)>
+| <PARENT_OPEN: "(">
+| <PARENT_CLOSE: ")">
+  
+| <SUM: "+">
+| <SUBTRAC: "-">
+| <DIVISION: "/">
+| <MULTIPLICATION: "*">
+| <MODULE: "%">
+| <XOR: "^">
+| <AND: "&">
+| <OR: "|">
+| <NOT: "~">
 
-| <NUM: (["0"-"9"])+>
-| <FUNC: <TEXT>"("(<TEXT>)*")">
-| <VAR: <TEXT>>
+| <ASSIGNMENT: "=">
 
-|<TEXT: ((["a"-"z","A"-"Z"])+(["0"-"9"])*)>
+| <EQUAL: "==">
+| <DIFFERENT: "!=">
+| <GREATER: ">">
+| <LESS: "<">
+| <GREQUAL: ">=">
+| <LSEQUAL: "<=">
+| <CAND: "&&">
+| <COR: "||">
+| <CXOR: "^^">
+| <CNOT: "!">
+
+| <POINT: ".">
+| <PCOMMA: ";">
+
+| <NUMBER: (["0"-"9"])+>
+| <TXVALID: ((["a"-"z","A"-"Z"])+(["0"-"9"])*)>
+
+| <OTHER: (["a" - "z"])+>
 }
 
 
 
 
 
-void run() :
+public void run() :
 {}
 {
-    <SOMA>
+    {
+        while(true){
+            analyzer();
+            
+            //only debug
+            System.out.println(
+                "LineAll: " + count.lineAll +
+                "lineBlank: " + count.lineBlank
+            );
+        }
+    }
+    
+}
+
+
+private void analyzer():
+{}
+{
+    checkNewLineBlank() | (checkExpression() checkNewLine())
+}         
+            
+
+
+private void checkNewLine():
+{}
+{
+    <NLINE> {count.lineAll++;}
+}
+
+
+private void checkNewLineBlank():
+{}
+{
+    <NLINE> {count.lineBlank++; count.lineAll++;}
+}
+
+
+
+private void checkExpression():
+{}
+{
+    <NUMBER> {System.out.println("n\n");}
 }

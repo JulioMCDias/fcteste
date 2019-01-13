@@ -5,6 +5,12 @@
  */
 package com.fcteste.core;
 
+import com.fcteste.core.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -18,22 +24,22 @@ import static org.junit.Assert.*;
  * @author rnr
  */
 public class TestCodeAnalyzer {
-    
+
     public TestCodeAnalyzer() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -41,236 +47,368 @@ public class TestCodeAnalyzer {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    
-    
-    
-
     /*
     *
     * Simples operations
     *
-    */
+     */
     @Test
-    public void SimpleSum() {
-        String expression = "5+2";
+    public void SimpleSum() throws ParseException {
+        StringReader sr = new StringReader("5+2;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void SimpleSubtrac() {
-        String expression = "10-2";
+    public void SimpleSubtrac() throws ParseException {
+        StringReader sr = new StringReader("10-2;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSubtrac(), 1);
     }
-    
+
     @Test
-    public void SimpleMultiplication() {
-        String expression = "78*5";
+    public void SimpleMultiplication() throws ParseException {
+        StringReader sr = new StringReader("78*5;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
+
     @Test
-    public void SimpleDivision() {
-        String expression = "56/4";
+    public void SimpleDivision() throws ParseException {
+        StringReader sr = new StringReader("56/4;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpDivision(), 1);
     }
-    
+
     @Test
-    public void SimpleModule() {
-        String expression = "78%4";
+    public void SimpleModule() throws ParseException {
+        StringReader sr = new StringReader("78%4;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpModule(), 1);
     }
-    
+
     @Test
-    public void SimpleXor() {
-        String expression = "3^8";
+    public void SimpleXor() throws ParseException {
+        StringReader sr = new StringReader("3^8;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpXor(), 1);
     }
-    
+
     @Test
-    public void SimpleAnd() {
-        String expression = "3&8";
+    public void SimpleAnd() throws ParseException {
+        StringReader sr = new StringReader("3&8;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpAnd(), 1);
     }
-    
+
     @Test
-    public void SimpleOr() {
-        String expression = "3|8";
+    public void SimpleOr() throws ParseException {
+        StringReader sr = new StringReader("3|8;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpOr(), 1);
     }
-    
+
     @Test
-    public void SimpleNot() {
-        String expression = "~8+5";
+    public void SimpleNot() throws ParseException {
+        StringReader sr = new StringReader("~8+5;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpNot(), 1);
     }
-    
+
     /*
     *
     * Other operations: Variables and Methods 
     *
-    */
-    
+     */
     @Test
-    public void MethodSimple() {
-        String expression = "14-pi()";
+    public void MethodSimple() throws ParseException {
+        StringReader sr = new StringReader("14-pi();");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSubtrac(), 1);
     }
-    
+
     @Test
-    public void MethodCompound() {
-        String expression = "2*Math.pi()";
+    public void MethodCompound() throws ParseException {
+        StringReader sr = new StringReader("2*Math.pi();");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
+
     @Test
-    public void VariableSimple() {
-        String expression = "2*a";
+    public void VariableSimple() throws ParseException {
+        StringReader sr = new StringReader("2*a;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpNot(), 1);
     }
-    
+
     @Test
-    public void VariableCompound() {
-        String expression = "2*obj.varB";
+    public void VariableCompound() throws ParseException {
+        StringReader sr = new StringReader("2*obj.varB;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpNot(), 1);
     }
-    
-    
-    
+
     /*
     *
     * Assignment operations
     *
-    */
-    
-    
+     */
     @Test
-    public void Assignment() {
-        String expression = "area=pi*r^2";
+    public void Assignment() throws ParseException {
+        StringReader sr = new StringReader("area=pi*r^2;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
-    
-    
+
+    public void AssignmentOperation() throws ParseException {
+        StringReader sr = new StringReader("count+=2;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+    }
+
     /*
     *
     * Condition operations
     *
-    */
+     */
     @Test
-    public void CompareEqual() {
-        String expression = "5+2==10";
+    public void CompareEqual() throws ParseException {
+        StringReader sr = new StringReader("5+2==10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareDifferent() {
-        String expression = "5+2!=10";
+    public void CompareDifferent() throws ParseException {
+        StringReader sr = new StringReader("5+2!=10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareGreater() {
-        String expression = "5+2>10";
+    public void CompareGreater() throws ParseException {
+        StringReader sr = new StringReader("5+2>10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareLess() {
-        String expression = "5+2<10";
+    public void CompareLess() throws ParseException {
+        StringReader sr = new StringReader("5+2<10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareGreaterOrEqual() {
-        String expression = "5+2>=10";
+    public void CompareGreaterOrEqual() throws ParseException {
+        StringReader sr = new StringReader("5+2>=10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareLessOrEqual() {
-        String expression = "5+2<=10";
+    public void CompareLessOrEqual() throws ParseException {
+        StringReader sr = new StringReader("5+2<=10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareAnd() {
-        String expression = "5+2&&10";
+    public void CompareAnd() throws ParseException {
+        StringReader sr = new StringReader("5+2&&10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareOr() {
-        String expression = "5+2||10";
+    public void CompareOr() throws ParseException {
+        StringReader sr = new StringReader("5+2||10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
+
     @Test
-    public void CompareNot() {
-        String expression = "!(2==10)";
+    public void CompareXor() throws ParseException {
+        StringReader sr = new StringReader("5+2^^10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
-    
-    
+
+    @Test
+    public void CompareNot() throws ParseException {
+        StringReader sr = new StringReader("!(2==10);");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+    }
+
     /*
     *
     * First operations
     *
-    */
-    
+     */
     @Test
-    public void FirstSum() {
-        String expression = "+7+10";
+    public void FirstSum() throws ParseException {
+        StringReader sr = new StringReader("+7+10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 2);
     }
-    
+
     @Test
-    public void FirstSubtrac() {
-        String expression = "-7+10";
+    public void FirstSubtrac() throws ParseException {
+        StringReader sr = new StringReader("-7+10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSubtrac(), 1);
     }
-    
-    
+
     /*
     *
     * Parenthesis operations
     *
-    */
-    
+     */
     @Test
-    public void ParenthesisFirst() {
-        String expression = "(5+2)*5";
+    public void ParenthesisFirst() throws ParseException {
+        StringReader sr = new StringReader("(5+2)*5;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
+
     @Test
-    public void ParenthesisHalf() {
-        String expression = "2+7*(2-1)";
+    public void ParenthesisHalf() throws ParseException {
+        StringReader sr = new StringReader("2+7*(2-1);");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSubtrac(), 1);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
-    
-    
-    
-    
-    
+
     /*
     *
     * Half operations
     *
-    */
-    
+     */
     @Test
-    public void HalfSum() {
-        String expression = "7+(+10)*2";
+    public void HalfSum() throws ParseException {
+        StringReader sr = new StringReader("7+(+10)*2;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 2);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
+
     @Test
-    public void HalfSubtrac() {
-        String expression = "7+(-10)/10";
+    public void HalfSubtrac() throws ParseException {
+        StringReader sr = new StringReader("7+(-10)/10;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSubtrac(), 1);
+        assertEquals(code.count.getOpDivision(), 1);
     }
-    
-    
+
     /*
     *
     * Method operations
     *
-    */
-    
+     */
     @Test
-    public void MethodOperationsSimple() {
-        String expression = "abs(5+2)";
+    public void MethodOperationsSimple() throws ParseException {
+        StringReader sr = new StringReader("abs(5+2);");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
     }
-    
-    
+
     @Test
-    public void MethodOperationsCompound() {
-        String expression = "Math.pow(5+2,7-8)";
+    public void MethodOperationsCompound() throws ParseException {
+        StringReader sr = new StringReader("Math.pow(5+2,7-8);");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSubtrac(), 1);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
-    
-    
+
     /*
     *
     * Complex expression
     *
-    */
-    
+     */
     @Test
-    public void ComplexExpression() {
-        String expression = "5+(-2)*(5&(-2*4)*7) && (7/2*4) || (7^5)";
+    public void ComplexExpression() throws ParseException {
+        StringReader sr = new StringReader("5+(-2)*(5&(-2*4)*7) && (7/2*4) || (7^5);");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSubtrac(), 2);
+        assertEquals(code.count.getOpMultiplication(), 4);
+        assertEquals(code.count.getOpDivision(), 1);
+        assertEquals(code.count.getOpXor(), 1);
+        assertEquals(code.count.getOpAnd(), 1);
     }
-    
+
+    /*
+    *
+    * Line numbers
+    *
+     */
+    @Test
+    public void LineNumberAll() throws ParseException {
+        StringReader sr = new StringReader("5+7\n78+8\nfun()\n;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getLineAll(), 3);
+    }
+
+    @Test
+    public void LineNumberBlank() throws ParseException {
+        StringReader sr = new StringReader("5+7\n\nfun()\n\n;");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getLineBlank(), 3);
+    }
+
+    /*
+    *
+    * Command numbers
+    *
+     */
+    @Test
+    public void CommandNumber() throws ParseException {
+        StringReader sr = new StringReader("c=10-2;\nfunc();\n");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 1);
+    }
+
 }

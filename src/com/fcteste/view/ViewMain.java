@@ -8,20 +8,24 @@ package com.fcteste.view;
 import com.fcteste.controller.ControllView;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 
 /**
  *
  * @author Julio M. C. Dias
  */
-public class ViewPrincipal extends javax.swing.JFrame {
+public class ViewMain extends javax.swing.JFrame {
     private final ControllView cView;
+    private DefaultListModel dlm;
     /**
      * Creates new form ViewPrincipal
      * @param cView
      */
-    public ViewPrincipal(ControllView cView) {
+    public ViewMain(ControllView cView) {
         this.cView = cView;
+        dlm = new DefaultListModel();
         initComponents();
+        jListArq.setModel(dlm);
     }
 
     /**
@@ -52,7 +56,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jbtnAnalizarProjeto = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         jbtnSeleAll = new javax.swing.JButton();
-        jbtnLimpar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTFOperandos = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -119,8 +122,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         });
 
         jbtnSeleAll.setText("Selecionar Tudo");
-
-        jbtnLimpar.setText("Limpar");
+        jbtnSeleAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSeleAllActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("N. Operandos:");
 
@@ -143,7 +149,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -162,18 +168,13 @@ public class ViewPrincipal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jbtnProcurar))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3))
-                                        .addGap(18, 18, 18))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(jbtnSeleAll)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jbtnLimpar)
-                                        .addGap(68, 68, 68)))
+                                        .addGap(91, 91, 91)
+                                        .addComponent(jbtnSeleAll)))
+                                .addGap(18, 18, 18)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -212,7 +213,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jbtnGerarArquivo)
                                         .addGap(136, 136, 136)))))
-                        .addContainerGap())
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(jbtnAnalizarProjeto)
@@ -247,9 +248,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbtnSeleAll)
-                            .addComponent(jbtnLimpar)))
+                        .addComponent(jbtnSeleAll))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,16 +284,17 @@ public class ViewPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnGerarArquivoActionPerformed
 
     private void jListArqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListArqMouseClicked
-        DefaultListModel dlm = new DefaultListModel();
-        jListArq.setModel(dlm);
+        cView.selectionFiles();
     }//GEN-LAST:event_jListArqMouseClicked
 
     private void jbtnAnalizarProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnalizarProjetoActionPerformed
         cView.analyzeProject(jTFlocalProjeto.getText());
+        jbtnAnalizarProjeto.setEnabled(false);
     }//GEN-LAST:event_jbtnAnalizarProjetoActionPerformed
 
     private void jbtnNovoProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNovoProjetoActionPerformed
         cView.cleanProject();
+        jbtnAnalizarProjeto.setEnabled(true);
     }//GEN-LAST:event_jbtnNovoProjetoActionPerformed
 
     private void jbtnProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProcurarActionPerformed
@@ -310,6 +310,31 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jbtnProcurarActionPerformed
 
+    private void jbtnSeleAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSeleAllActionPerformed
+        int sizeList[] = new int[dlm.size()];
+        for (int i = 0; i < dlm.size(); i++)
+            sizeList[i] = i;
+        
+        jListArq.setSelectedIndices(sizeList);
+        cView.selectionFiles();
+    }//GEN-LAST:event_jbtnSeleAllActionPerformed
+
+    
+    
+    
+    
+    
+    //   gets
+    public DefaultListModel getDlm() {
+        return dlm;
+    }
+
+    public JList<String> getjListArq() {
+        return jListArq;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -335,7 +360,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField jTFlocalProjeto;
     private javax.swing.JButton jbtnAnalizarProjeto;
     private javax.swing.JButton jbtnGerarArquivo;
-    private javax.swing.JButton jbtnLimpar;
     private javax.swing.JButton jbtnNovoProjeto;
     private javax.swing.JButton jbtnProcurar;
     private javax.swing.JButton jbtnSeleAll;

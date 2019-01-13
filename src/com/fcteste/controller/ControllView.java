@@ -1,7 +1,7 @@
 package com.fcteste.controller;
 
 import com.fcteste.model.FilesJava;
-import com.fcteste.view.ViewPrincipal;
+import com.fcteste.view.ViewMain;
 import java.io.File;
 
 /**
@@ -10,7 +10,7 @@ import java.io.File;
  */
 public class ControllView {
     private static ControllView cView;
-    private static ViewPrincipal vPrincipal;
+    private static ViewMain vMain;
     private FilesJava filesJ;
     
     
@@ -29,19 +29,19 @@ public class ControllView {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                vPrincipal = new ViewPrincipal(cView);
-                vPrincipal.setVisible(true);
+                vMain = new ViewMain(cView);
+                vMain.setVisible(true);
             }
         });
  
@@ -52,13 +52,19 @@ public class ControllView {
         filesJ = new FilesJava(directory);
         filesJ.findFiles();
         for (File f : filesJ.getFiles()) {
-            System.out.println(f.getAbsolutePath());
+            vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }
     }
     
     public void cleanProject(){
         if(filesJ != null)
             filesJ.cleanArrayFiles();
+        vMain.getDlm().clear();
     }
     
+    
+    public void selectionFiles(){
+       int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
+       
+    }
 }

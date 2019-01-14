@@ -61,11 +61,15 @@ public interface CodeAnalyzerConstants {
   /** RegularExpression Id. */
   int PCOMMA = 29;
   /** RegularExpression Id. */
-  int NUMBER = 30;
+  int COMMA = 30;
   /** RegularExpression Id. */
-  int TEXTVALID = 31;
+  int VARIABLE = 31;
   /** RegularExpression Id. */
-  int OTHER = 32;
+  int NUMBER = 32;
+  /** RegularExpression Id. */
+  int TEXTVALID = 33;
+  /** RegularExpression Id. */
+  int OTHER = 34;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -102,6 +106,8 @@ public interface CodeAnalyzerConstants {
     "\"!\"",
     "\".\"",
     "\";\"",
+    "\",\"",
+    "<VARIABLE>",
     "<NUMBER>",
     "<TEXTVALID>",
     "<OTHER>",

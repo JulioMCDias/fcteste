@@ -150,7 +150,7 @@ public class TestCodeAnalyzer {
         StringReader sr = new StringReader("2*a;");
         CodeAnalyzer code = new CodeAnalyzer(sr);
         code.run();
-        assertEquals(code.count.getOpNot(), 1);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
 
     @Test
@@ -158,7 +158,7 @@ public class TestCodeAnalyzer {
         StringReader sr = new StringReader("2*obj.varB;");
         CodeAnalyzer code = new CodeAnalyzer(sr);
         code.run();
-        assertEquals(code.count.getOpNot(), 1);
+        assertEquals(code.count.getOpMultiplication(), 1);
     }
 
     /*
@@ -173,7 +173,8 @@ public class TestCodeAnalyzer {
         code.run();
         assertEquals(code.count.getOpMultiplication(), 1);
     }
-
+    
+    @Test
     public void AssignmentOperation() throws ParseException {
         StringReader sr = new StringReader("count+=2;");
         CodeAnalyzer code = new CodeAnalyzer(sr);
@@ -263,7 +264,7 @@ public class TestCodeAnalyzer {
         StringReader sr = new StringReader("!(2==10);");
         CodeAnalyzer code = new CodeAnalyzer(sr);
         code.run();
-        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getOpSum(), 0);
     }
 
     /*
@@ -356,7 +357,6 @@ public class TestCodeAnalyzer {
         code.run();
         assertEquals(code.count.getOpSum(), 1);
         assertEquals(code.count.getOpSubtrac(), 1);
-        assertEquals(code.count.getOpMultiplication(), 1);
     }
 
     /*
@@ -408,7 +408,21 @@ public class TestCodeAnalyzer {
         StringReader sr = new StringReader("c=10-2;\nfunc();\n");
         CodeAnalyzer code = new CodeAnalyzer(sr);
         code.run();
-        assertEquals(code.count.getOpSum(), 1);
+        assertEquals(code.count.getCommand(), 2);
+    }
+    
+    
+    /*
+    *
+    * Others
+    *
+    */
+    @Test
+    public void StringVoid() throws ParseException {
+        StringReader sr = new StringReader("");
+        CodeAnalyzer code = new CodeAnalyzer(sr);
+        code.run();
+        assertEquals(code.count.getOpSum(), 0);
     }
 
 }

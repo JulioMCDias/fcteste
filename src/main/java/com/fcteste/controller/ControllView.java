@@ -1,9 +1,12 @@
 package com.fcteste.controller;
 
 import com.fcteste.model.AnalyzerFiles;
+import com.fcteste.model.CreateFileCSV;
 import com.fcteste.model.FilesJava;
 import com.fcteste.view.ViewMain;
 import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,8 +17,14 @@ public class ControllView {
     private static ViewMain vMain;
     private FilesJava filesJ;
     private AnalyzerFiles analyFiles;
+    private CreateFileCSV cfCSV;
+
     
+    public ControllView() {
+        cfCSV = new CreateFileCSV();
+    }
     
+        
     public static void main(String args[]) {       
         cView = new ControllView();
         /* Set the Nimbus look and feel */
@@ -74,7 +83,7 @@ public class ControllView {
         int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
         if(listFilesSelected != null && !analyFiles.getListCAnalyzer().isEmpty()){
             for (int fileSele : listFilesSelected) {
-                vMain.setjTFLinBrancas(analyFiles.getListCAnalyzer().get(fileSele).count.getLineBlank());
+                vMain.setjTFQtMetodos(analyFiles.getListCAnalyzer().get(fileSele).count.getLineBlank());
                 //vMain.setjTFLinComando(analyFiles.getListCAnalyzer().get(fileSele).count.getLineComand());
                 vMain.setjTFLinTotal(analyFiles.getListCAnalyzer().get(fileSele).count.getLineAll());
                 vMain.setjTFOperadoresTotais(analyFiles.getListCAnalyzer().get(fileSele).count.getOperator());
@@ -85,8 +94,27 @@ public class ControllView {
         
     }
     
+    public void creatCSV(){
+        
+        JFileChooser chooser = new JFileChooser(); 
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setDialogTitle("Salvar projeto SVG");
+        chooser.setSelectedFile(new File("projeto.csv"));
+        
+        FileNameExtensionFilter sgvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
+        // add filters
+        chooser.addChoosableFileFilter(sgvFilter);
+        chooser.setFileFilter(sgvFilter);
+        
+        chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
+        if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) { 
+            cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer());
+        }
+    }
+    
     private void cleanFiled(){
-        vMain.setjTFLinBrancas(0);
+        vMain.setjTFQtMetodos(0);
         vMain.setjTFLinComando(0);
         vMain.setjTFLinTotal(0);
         vMain.setjTFOperadoresTotais(0);

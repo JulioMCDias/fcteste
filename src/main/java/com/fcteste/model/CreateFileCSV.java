@@ -5,25 +5,39 @@
  */
 package com.fcteste.model;
 
+import com.fcteste.core.CodeAnalyzer;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
  * @author Julio M. C. Dias
  */
-public class CreateFileSGV {
+public class CreateFileCSV {
     
     
 
-    public void creatFileSVG(String directory) {
+    public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA) {
         BufferedWriter output = null;
         try {
-            File file = new File(directory);
             output = new BufferedWriter(new FileWriter(file));
-            output.write("asdasdad");
+            
+            for (CodeAnalyzer codeAnalyzer : cA) {
+                output.write(
+                        codeAnalyzer.count.getLineAll()+","+
+                        codeAnalyzer.count.getCommand()+","+
+                        codeAnalyzer.count.getLineBlank()+","+
+                        codeAnalyzer.count.getOperating()+","+
+                        codeAnalyzer.count.getOperatorOnly()+","+
+                        codeAnalyzer.count.getOperator()+"\n"
+                        );
+            }
+            
+            
+            
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

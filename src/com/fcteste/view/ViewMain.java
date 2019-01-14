@@ -9,6 +9,7 @@ import com.fcteste.controller.ControllView;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -332,6 +333,31 @@ public class ViewMain extends javax.swing.JFrame {
     public JList<String> getjListArq() {
         return jListArq;
     }
+
+    public void setjTFLinBrancas(int value) {
+        jTFLinBrancas.setText(String.valueOf(value));
+    }
+
+    public void setjTFLinComando(int value) {
+        jTFLinComando.setText(String.valueOf(value));
+    }
+
+    public void setjTFLinTotal(int value) {
+        jTFLinTotal.setText(String.valueOf(value));
+    }
+
+    public void setjTFOperadoresTotais(int value) {
+        jTFOperadoresTotais.setText(String.valueOf(value));
+    }
+
+    public void setjTFOperadoresUni(int value) {
+        jTFOperadoresUni.setText(String.valueOf(value));
+    }
+
+    public void setjTFOperandos(int value) {
+        jTFOperandos.setText(String.valueOf(value));
+    }
+    
     
     
     

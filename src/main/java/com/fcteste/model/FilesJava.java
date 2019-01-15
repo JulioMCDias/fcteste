@@ -52,7 +52,7 @@ public class FilesJava {
     private boolean getFileExtensionJava(File file) {
         String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0 &&
-                fileName.matches("^.*[.]java$"))
+                fileName.matches("^.+[.]java$"))
             return true;
         return false;
     }

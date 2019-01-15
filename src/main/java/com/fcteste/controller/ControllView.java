@@ -53,6 +53,7 @@ public class ControllView {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 vMain = new ViewMain(cView);
+                vMain.setLocationRelativeTo(null);
                 vMain.setVisible(true);
             }
         });
@@ -62,19 +63,18 @@ public class ControllView {
     public void analyzeProject(String directory) {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
-        filesJ.findFiles();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                filesJ.findFiles();
                 analyFiles.applyAnaly(filesJ);
-                System.out.println(analyFiles.getListCAnalyzer().size());
             }
         }).start();
-        
-        vPBar = new ViewProgressBar(vMain, true, filesJ.getFiles().size(), analyFiles);
+
+        vPBar = new ViewProgressBar(vMain, true, filesJ, analyFiles);
+        vPBar.setLocationRelativeTo(null);
         vPBar.setVisible(true);
-        
         for (File f : filesJ.getFiles()) {
             vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }

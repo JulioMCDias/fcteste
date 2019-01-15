@@ -5,15 +5,13 @@
  */
 package com.fcteste.core;
 
-import com.fcteste.core.*;
+import com.fcteste.model.CodeAnalyzer;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -85,8 +83,7 @@ public class TestCodeAnalyzer {
     public void StringVoid() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
-        code.run();
-        assertEquals(7, code.count.getOperator());
+        assertEquals(8, code.count.getOperator());
     }
 
 }

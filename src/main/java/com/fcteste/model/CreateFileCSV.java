@@ -5,7 +5,6 @@
  */
 package com.fcteste.model;
 
-import com.fcteste.core.CodeAnalyzer;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,35 +16,34 @@ import java.util.ArrayList;
  * @author Julio M. C. Dias
  */
 public class CreateFileCSV {
-    
-    
 
     public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA) {
         BufferedWriter output = null;
         try {
             output = new BufferedWriter(new FileWriter(file));
-            
+            output.write("SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
+
             for (CodeAnalyzer codeAnalyzer : cA) {
                 output.write(
-                        codeAnalyzer.count.getLineAll()+","+
-                        codeAnalyzer.count.getCommand()+","+
-                        codeAnalyzer.count.getLineBlank()+","+
-                        codeAnalyzer.count.getOperating()+","+
-                        codeAnalyzer.count.getOperatorOnly()+","+
-                        codeAnalyzer.count.getOperator()+"\n"
-                        );
+                        codeAnalyzer.count.getLineNumber() + ","
+                        + codeAnalyzer.count.getMethod() + ","
+                        + codeAnalyzer.count.getMethodCall() + ","
+                        + codeAnalyzer.count.getOperator() + ","
+                        + codeAnalyzer.count.getOperatorOnly() + ","
+                        + codeAnalyzer.count.getOperating() + "\n"
+                );
             }
-            
-            
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (output != null) 
-                output.close();
-            } catch (Exception e) { }
-            
+                if (output != null) {
+                    output.close();
+                }
+            } catch (IOException e) {
+            }
+
         }
     }
 }

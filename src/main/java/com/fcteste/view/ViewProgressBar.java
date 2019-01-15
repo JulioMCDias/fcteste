@@ -5,19 +5,17 @@
  */
 package com.fcteste.view;
 
-import com.fcteste.core.CodeAnalyzer;
 import com.fcteste.model.AnalyzerFiles;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingWorker;
 
 /**
  *
- * @author julio
+ * @author Julio M. C. Dias
  */
 public class ViewProgressBar extends javax.swing.JDialog 
         implements PropertyChangeListener {
@@ -124,6 +122,9 @@ public class ViewProgressBar extends javax.swing.JDialog
          */
         @Override
         public Void doInBackground() {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) { }
             while (listCA.getListCAnalyzer().size() < numberFiles) {
                 //Sleep
                 try {

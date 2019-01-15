@@ -309,6 +309,7 @@ public class ViewMain extends javax.swing.JFrame {
 
     private void jbtnNovoProjetoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNovoProjetoActionPerformed
         cView.cleanProject();
+        jTFlocalProjeto.setText("");
         jbtnAnalizarProjeto.setEnabled(true);
         jbtnGerarArquivo.setEnabled(false);
     }//GEN-LAST:event_jbtnNovoProjetoActionPerformed

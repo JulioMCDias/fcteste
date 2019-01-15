@@ -63,12 +63,10 @@ public class ControllView {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
         filesJ.findFiles();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 analyFiles.applyAnaly(filesJ);
-                System.out.println(analyFiles.getListCAnalyzer().size());
             }
         }).start();
         

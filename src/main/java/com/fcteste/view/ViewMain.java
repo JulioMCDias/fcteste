@@ -356,31 +356,31 @@ public class ViewMain extends javax.swing.JFrame {
     }
 
     public void setjTFQtMetodos(int value) {
-        jTfQtMetodos.setText(String.valueOf(value));
+        jTfQtMetodos.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFLinComando(int value) {
-        jTFLinComando.setText(String.valueOf(value));
+        jTFLinComando.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFLinTotal(int value) {
-        jTFLinTotal.setText(String.valueOf(value));
+        jTFLinTotal.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFOperadoresTotais(int value) {
-        jTFOperadoresTotais.setText(String.valueOf(value));
+        jTFOperadoresTotais.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFOperadoresUni(int value) {
-        jTFOperadoresUni.setText(String.valueOf(value));
+        jTFOperadoresUni.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFOperandos(int value) {
-        jTFOperandos.setText(String.valueOf(value));
+        jTFOperandos.setText((value < 0) ? "--" : String.valueOf(value));
     }
 
     public void setjTFArquivos(int value) {
-        jTFArquivos.setText(String.valueOf(value));
+        jTFArquivos.setText((value < 0) ? "--" : String.valueOf(value));
     }
     
     

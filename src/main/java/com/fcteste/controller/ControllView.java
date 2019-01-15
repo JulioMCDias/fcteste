@@ -4,6 +4,7 @@ import com.fcteste.model.AnalyzerFiles;
 import com.fcteste.model.CreateFileCSV;
 import com.fcteste.model.FilesJava;
 import com.fcteste.view.ViewMain;
+import com.fcteste.view.ViewProgressBar;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,7 +19,8 @@ public class ControllView {
     private static ViewMain vMain;
     private FilesJava filesJ;
     private AnalyzerFiles analyFiles;
-    private CreateFileCSV cfCSV;
+    private final CreateFileCSV cfCSV;
+    private ViewProgressBar vPBar;
 
     public ControllView() {
         cfCSV = new CreateFileCSV();
@@ -61,10 +63,21 @@ public class ControllView {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
         filesJ.findFiles();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                analyFiles.applyAnaly(filesJ);
+                System.out.println(analyFiles.getListCAnalyzer().size());
+            }
+        }).start();
+        
+        vPBar = new ViewProgressBar(vMain, true, filesJ.getFiles().size(), analyFiles);
+        vPBar.setVisible(true);
+        
         for (File f : filesJ.getFiles()) {
             vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }
-        analyFiles.applyAnaly(filesJ);
         vMain.setjTFArquivos(filesJ.getFiles().size());
     }
 
@@ -98,11 +111,7 @@ public class ControllView {
             vMain.setjTFLinComando(listjTF[1]);
             vMain.setjTFLinTotal(listjTF[2]);
             vMain.setjTFOperadoresTotais(listjTF[3]);
-            if (listFilesSelected.length == 1) {
-                vMain.setjTFOperadoresUni(listjTF[4]);
-            }else{
-                vMain.setjTFOperadoresUni(-1);
-            }
+            vMain.setjTFOperadoresUni((listFilesSelected.length > 1) ? -1 : listjTF[4]);
             vMain.setjTFOperandos(listjTF[5]);
 
         }

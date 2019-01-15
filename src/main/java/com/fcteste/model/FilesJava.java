@@ -7,7 +7,6 @@ package com.fcteste.model;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 /**
  *
  * @author Julio M. C. Dias
@@ -42,12 +41,7 @@ public class FilesJava {
         for (File file : fList) {      
             if (file.isFile()) {
                 if(getFileExtensionJava(file)){
-                    try{
                     files.add(file);
-                    
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
                 }    
             } else if (file.isDirectory()) {
                 listf(file.getAbsolutePath(), files);
@@ -58,7 +52,7 @@ public class FilesJava {
     private boolean getFileExtensionJava(File file) {
         String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0 &&
-                fileName.matches("^[a-zA-Z0-9]*.java$"))
+                fileName.matches("^.+[.]java$"))
             return true;
         return false;
     }

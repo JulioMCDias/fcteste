@@ -5,49 +5,48 @@
  */
 package com.fcteste.model;
 
-import com.fcteste.core.CodeAnalyzer;
+import com.github.javaparser.ParseProblemException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Julio M. C. Dias
  */
 public class AnalyzerFiles {
+
     private ArrayList<CodeAnalyzer> listCAnalyzer;
 
     public AnalyzerFiles() {
         listCAnalyzer = new ArrayList<>();
     }
-    
-    
-    
-    
-    public void applyAnaly(FilesJava filesJ){
+
+    public void applyAnaly(FilesJava filesJ) {
+        ArrayList<File> fJ = (ArrayList<File>) filesJ.getFiles().clone();
         InputStream istream;
         CodeAnalyzer cAnaly;
-        for (File file : filesJ.getFiles()) {
+        for (File file : fJ) {
             try {
                 istream = new FileInputStream(file);
                 cAnaly = new CodeAnalyzer(istream);
-                cAnaly.run();
                 listCAnalyzer.add(cAnaly);
                 istream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            
+            }catch (ParseProblemException e) {
+                filesJ.getFiles().remove(file);
+            } catch (IOException ex) {
+                Logger.getLogger(AnalyzerFiles.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }   
+        }
     }
-    
-    
-    
-    
-    public void cleanArrayFiles(){
+
+    public void cleanArrayFiles() {
         listCAnalyzer.clear();
     }
 

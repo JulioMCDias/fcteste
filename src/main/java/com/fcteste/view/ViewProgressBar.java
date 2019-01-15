@@ -6,11 +6,11 @@
 package com.fcteste.view;
 
 import com.fcteste.model.AnalyzerFiles;
+import com.fcteste.model.FilesJava;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
 /**
@@ -21,9 +21,9 @@ public class ViewProgressBar extends javax.swing.JDialog
         implements PropertyChangeListener {
 
     
-    private Task task;
-    int numberFiles;
-    private AnalyzerFiles listCA;
+    private final Task task;
+    private final FilesJava filesJ;
+    private final AnalyzerFiles listCA;
     
     
     /**
@@ -33,12 +33,12 @@ public class ViewProgressBar extends javax.swing.JDialog
      * @param numberFiles
      * @param listCA
      */
-    public ViewProgressBar(java.awt.Frame parent, boolean modal ,int numberFiles, AnalyzerFiles listCA) {
+    public ViewProgressBar(java.awt.Frame parent, boolean modal ,FilesJava filesJ , AnalyzerFiles listCA) {
         super(parent, modal);
-        this.numberFiles = numberFiles;
+        this.filesJ = filesJ;
         this.listCA = listCA;
         initComponents();
-        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
         jProgressBar.setIndeterminate(true);
         task = new Task();
         task.addPropertyChangeListener(this);
@@ -58,8 +58,7 @@ public class ViewProgressBar extends javax.swing.JDialog
             int progress = (Integer) evt.getNewValue();
             jProgressBar.setIndeterminate(false);
             jProgressBar.setValue(progress);
-            jLabel1.setText(String.format(
-                        "Processando... %d de %d", progress, numberFiles));
+            jLabel1.setText(String.format("Processando... %d de %d", listCA.getListCAnalyzer().size(), filesJ.getFiles().size()));
         }
     }
 
@@ -125,14 +124,14 @@ public class ViewProgressBar extends javax.swing.JDialog
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) { }
-            while (listCA.getListCAnalyzer().size() < numberFiles) {
+            while (listCA.getListCAnalyzer().size() < filesJ.getFiles().size()) {
                 //Sleep
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ignore) { }
-                setProgress((listCA.getListCAnalyzer().size()*100)/numberFiles);
+                setProgress((listCA.getListCAnalyzer().size()*100)/filesJ.getFiles().size());
             }
-                setVisible(false);
+            setVisible(false);
             return null;
         }
  

@@ -53,6 +53,7 @@ public class ControllView {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 vMain = new ViewMain(cView);
+                vMain.setLocationRelativeTo(null);
                 vMain.setVisible(true);
             }
         });
@@ -62,17 +63,18 @@ public class ControllView {
     public void analyzeProject(String directory) {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
-        filesJ.findFiles();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+                filesJ.findFiles();
                 analyFiles.applyAnaly(filesJ);
             }
         }).start();
-        
-        vPBar = new ViewProgressBar(vMain, true, filesJ.getFiles().size(), analyFiles);
+
+        vPBar = new ViewProgressBar(vMain, true, filesJ, analyFiles);
+        vPBar.setLocationRelativeTo(null);
         vPBar.setVisible(true);
-        
         for (File f : filesJ.getFiles()) {
             vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }
@@ -99,8 +101,8 @@ public class ControllView {
         if (listFilesSelected != null && analyFiles != null) {
             for (int fileSele : listFilesSelected) {
                 listjTF[0] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethod();
-                //listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineComand();  
-                listjTF[2] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineAll();
+                listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethodCall();
+                listjTF[2] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineNumber();
                 listjTF[3] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperator();
                 listjTF[4] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperatorOnly();
                 listjTF[5] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperating();
@@ -121,13 +123,13 @@ public class ControllView {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.setDialogTitle("Salvar projeto SVG");
+        chooser.setDialogTitle("Salvar projeto CSV");
         chooser.setSelectedFile(new File("projeto.csv"));
 
-        FileNameExtensionFilter sgvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
+        FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
         // add filters
-        chooser.addChoosableFileFilter(sgvFilter);
-        chooser.setFileFilter(sgvFilter);
+        chooser.addChoosableFileFilter(csvFilter);
+        chooser.setFileFilter(csvFilter);
 
         chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
         if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {

@@ -67,6 +67,7 @@ public class ControllView {
             vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }
         analyFiles.applyAnaly(filesJ);
+        vMain.setjTFArquivos(filesJ.getFiles().size());
     }
     
     public void cleanProject(){
@@ -75,21 +76,32 @@ public class ControllView {
         if(analyFiles != null)
             analyFiles.cleanArrayFiles();
         vMain.getDlm().clear();
+        cleanFiled();
+        vMain.setjTFArquivos(0);
     }
     
     
     public void selectionFiles(){
         cleanFiled();
         int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
-        if(listFilesSelected != null && !analyFiles.getListCAnalyzer().isEmpty()){
+        int[] listjTF = new int[6];
+        
+        if(listFilesSelected != null && analyFiles != null){
             for (int fileSele : listFilesSelected) {
-                vMain.setjTFQtMetodos(analyFiles.getListCAnalyzer().get(fileSele).count.getLineBlank());
-                //vMain.setjTFLinComando(analyFiles.getListCAnalyzer().get(fileSele).count.getLineComand());
-                vMain.setjTFLinTotal(analyFiles.getListCAnalyzer().get(fileSele).count.getLineAll());
-                vMain.setjTFOperadoresTotais(analyFiles.getListCAnalyzer().get(fileSele).count.getOperator());
-                vMain.setjTFOperadoresUni(analyFiles.getListCAnalyzer().get(fileSele).count.getOperatorOnly());
-                vMain.setjTFOperandos(analyFiles.getListCAnalyzer().get(fileSele).count.getOperating());
+                listjTF[0] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethod();
+                //listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineComand();  
+                listjTF[2] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineAll();
+                listjTF[3] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperator();
+                listjTF[4] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperatorOnly();
+                listjTF[5] += analyFiles.getListCAnalyzer().get(fileSele).count.getOperating();
             }
+            vMain.setjTFQtMetodos(listjTF[0]);
+            vMain.setjTFLinComando(listjTF[1]);
+            vMain.setjTFLinTotal(listjTF[2]);
+            vMain.setjTFOperadoresTotais(listjTF[3]);
+            vMain.setjTFOperadoresUni(listjTF[4]);
+            vMain.setjTFOperandos(listjTF[5]);
+            
         }
         
     }

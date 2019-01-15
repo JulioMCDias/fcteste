@@ -126,10 +126,10 @@ public class ControllView {
         chooser.setDialogTitle("Salvar projeto CSV");
         chooser.setSelectedFile(new File("projeto.csv"));
 
-        FileNameExtensionFilter sgvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
+        FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
         // add filters
-        chooser.addChoosableFileFilter(sgvFilter);
-        chooser.setFileFilter(sgvFilter);
+        chooser.addChoosableFileFilter(csvFilter);
+        chooser.setFileFilter(csvFilter);
 
         chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
         if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {

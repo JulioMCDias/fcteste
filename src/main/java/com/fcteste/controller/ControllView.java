@@ -4,6 +4,7 @@ import com.fcteste.model.AnalyzerFiles;
 import com.fcteste.model.CreateFileCSV;
 import com.fcteste.model.FilesJava;
 import com.fcteste.view.ViewMain;
+import com.fcteste.view.ViewProgressBar;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,19 +14,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Julio M. C. Dias
  */
 public class ControllView {
+
     private static ControllView cView;
     private static ViewMain vMain;
     private FilesJava filesJ;
     private AnalyzerFiles analyFiles;
-    private CreateFileCSV cfCSV;
+    private final CreateFileCSV cfCSV;
+    private ViewProgressBar vPBar;
 
-    
     public ControllView() {
         cfCSV = new CreateFileCSV();
     }
-    
-        
-    public static void main(String args[]) {       
+
+    public static void main(String args[]) {
         cView = new ControllView();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -55,38 +56,49 @@ public class ControllView {
                 vMain.setVisible(true);
             }
         });
- 
+
     }
 
-    
-    public void analyzeProject(String directory){
+    public void analyzeProject(String directory) {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
         filesJ.findFiles();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                analyFiles.applyAnaly(filesJ);
+                System.out.println(analyFiles.getListCAnalyzer().size());
+            }
+        }).start();
+        
+        vPBar = new ViewProgressBar(vMain, true, filesJ.getFiles().size(), analyFiles);
+        vPBar.setVisible(true);
+        
         for (File f : filesJ.getFiles()) {
             vMain.getDlm().addElement(f.toString().replace(directory, ""));
         }
-        analyFiles.applyAnaly(filesJ);
         vMain.setjTFArquivos(filesJ.getFiles().size());
     }
-    
-    public void cleanProject(){
-        if(filesJ != null)
+
+    public void cleanProject() {
+        if (filesJ != null) {
             filesJ.cleanArrayFiles();
-        if(analyFiles != null)
+        }
+        if (analyFiles != null) {
             analyFiles.cleanArrayFiles();
+        }
         vMain.getDlm().clear();
         cleanFiled();
         vMain.setjTFArquivos(0);
     }
-    
-    
-    public void selectionFiles(){
+
+    public void selectionFiles() {
         cleanFiled();
         int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
         int[] listjTF = new int[6];
-        
-        if(listFilesSelected != null && analyFiles != null){
+
+        if (listFilesSelected != null && analyFiles != null) {
             for (int fileSele : listFilesSelected) {
                 listjTF[0] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethod();
                 //listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getLineComand();  
@@ -99,33 +111,33 @@ public class ControllView {
             vMain.setjTFLinComando(listjTF[1]);
             vMain.setjTFLinTotal(listjTF[2]);
             vMain.setjTFOperadoresTotais(listjTF[3]);
-            vMain.setjTFOperadoresUni(listjTF[4]);
+            vMain.setjTFOperadoresUni((listFilesSelected.length > 1) ? -1 : listjTF[4]);
             vMain.setjTFOperandos(listjTF[5]);
-            
+
         }
-        
+
     }
-    
-    public void creatCSV(){
-        
-        JFileChooser chooser = new JFileChooser(); 
+
+    public void creatCSV() {
+
+        JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setDialogTitle("Salvar projeto SVG");
         chooser.setSelectedFile(new File("projeto.csv"));
-        
+
         FileNameExtensionFilter sgvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
         // add filters
         chooser.addChoosableFileFilter(sgvFilter);
         chooser.setFileFilter(sgvFilter);
-        
+
         chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
-        if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) { 
+        if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
             cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer());
         }
     }
-    
-    private void cleanFiled(){
+
+    private void cleanFiled() {
         vMain.setjTFQtMetodos(0);
         vMain.setjTFLinComando(0);
         vMain.setjTFLinTotal(0);

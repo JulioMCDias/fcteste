@@ -21,15 +21,16 @@ public class CreateFileCSV {
         BufferedWriter output = null;
         try {
             output = new BufferedWriter(new FileWriter(file));
+            output.write("SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
 
             for (CodeAnalyzer codeAnalyzer : cA) {
                 output.write(
                         codeAnalyzer.count.getLineNumber() + ","
-                        + codeAnalyzer.count.getMethodCall() + ","
                         + codeAnalyzer.count.getMethod() + ","
-                        + codeAnalyzer.count.getOperating() + ","
+                        + codeAnalyzer.count.getMethodCall() + ","
+                        + codeAnalyzer.count.getOperator() + ","
                         + codeAnalyzer.count.getOperatorOnly() + ","
-                        + codeAnalyzer.count.getOperator() + "\n"
+                        + codeAnalyzer.count.getOperating() + "\n"
                 );
             }
 

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -17,20 +18,25 @@ import java.util.ArrayList;
  */
 public class CreateFileCSV {
 
-    public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA) {
+    public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA, ArrayList<String> lFName) {
         BufferedWriter output = null;
+        Iterator<CodeAnalyzer> iCA = cA.iterator();
+        Iterator<String> iLFN = lFName.iterator();
+        CodeAnalyzer cAna;
         try {
             output = new BufferedWriter(new FileWriter(file));
-            output.write("SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
+            output.write("Name,SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
 
-            for (CodeAnalyzer codeAnalyzer : cA) {
+            while (iCA.hasNext() && iLFN.hasNext()) {
+                cAna = iCA.next();
                 output.write(
-                        codeAnalyzer.count.getLineNumber() + ","
-                        + codeAnalyzer.count.getMethod() + ","
-                        + codeAnalyzer.count.getMethodCall() + ","
-                        + codeAnalyzer.count.getOperator() + ","
-                        + codeAnalyzer.count.getOperatorOnly() + ","
-                        + codeAnalyzer.count.getOperating() + "\n"
+                        iLFN.next() + ","
+                        + cAna.count.getLineNumber() + ","
+                        + cAna.count.getMethod() + ","
+                        + cAna.count.getMethodCall() + ","
+                        + cAna.count.getOperator() + ","
+                        + cAna.count.getOperatorOnly() + ","
+                        + cAna.count.getOperating() + "\n"
                 );
             }
 

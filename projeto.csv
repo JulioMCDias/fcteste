@@ -1,0 +1,9 @@
+Name,SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,
+ControllView.java,148,6,48,17,5,34
+CreateFileCSV.java,55,1,9,4,3,8
+CodeAnalyzer.java,115,13,13,11,4,14
+AnalyzerFiles.java,56,3,6,3,1,6
+FilesJava.java,85,8,13,10,4,19
+ViewMain.java,420,16,77,34,4,67
+ViewProgressBar.java,149,4,26,6,2,12
+TestCodeAnalyzer.java,89,5,2,27,1,54

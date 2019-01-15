@@ -70,6 +70,14 @@ public class FilesJava {
         return files;
     }
     
+    public ArrayList<String> getFilesName() {
+        ArrayList<String> lFName = new ArrayList<>();
+        for (File file : files) {
+            lFName.add(file.getName());
+        }
+        return lFName;
+    }
+    
     public void cleanArrayFiles(){
         files.clear();
     }

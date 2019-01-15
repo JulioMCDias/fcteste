@@ -133,7 +133,7 @@ public class ControllView {
 
         chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
         if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
-            cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer());
+            cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer(), filesJ.getFilesName());
         }
     }
 

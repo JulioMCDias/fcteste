@@ -3,7 +3,7 @@ Ferramenta para testes em projetos java
 
 FCTeste Plataforma principal
 
-![FCTeste Plataforma](https://github.com/JulioMCDias/fcteste/img/ViewMain.png "FCTeste Plataforma")
+![FCTeste Plataforma](https://github.com/JulioMCDias/fcteste/raw/master/img/ViewMain.png "FCTeste Plataforma")
 
 
 ## Funcionalidades

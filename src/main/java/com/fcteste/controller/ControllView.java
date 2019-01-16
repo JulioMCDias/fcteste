@@ -8,14 +8,16 @@ import com.fcteste.view.ViewProgressBar;
 import java.io.File;
 import java.io.Serializable;
 import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.SAVE_DIALOG;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Julio M. C. Dias
  */
+public class ControllView implements Serializable {
 
-public class ControllView implements Serializable{
     private static final long serialVersionUID = 1L;
     private static ControllView cView;
     private static ViewMain vMain;
@@ -115,9 +117,31 @@ public class ControllView implements Serializable{
     }
 
     public void creatCSV() {
-        if(analyFiles != null && filesJ != null){
-            JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new java.io.File("."));
+        if (analyFiles != null && filesJ != null) {
+            JFileChooser chooser = new JFileChooser() {
+                @Override
+                public void approveSelection() {
+                    File f = getSelectedFile();
+                    if (f.exists() && getDialogType() == SAVE_DIALOG) {
+                        int result = JOptionPane.showConfirmDialog(this, "O arquivo já existe, deseja sobrescrever?", "Arquivo existente", JOptionPane.YES_NO_CANCEL_OPTION);
+                        switch (result) {
+                            case JOptionPane.YES_OPTION:
+                                super.approveSelection();
+                                return;
+                            case JOptionPane.NO_OPTION:
+                                return;
+                            case JOptionPane.CLOSED_OPTION:
+                                return;
+                            case JOptionPane.CANCEL_OPTION:
+                                cancelSelection();
+                                return;
+                        }
+                    }
+                    super.approveSelection();
+                }
+
+            };
+            //chooser.setCurrentDirectory(new java.io.File("."));
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             chooser.setDialogTitle("Salvar projeto CSV");
             chooser.setSelectedFile(new File("projeto.csv"));

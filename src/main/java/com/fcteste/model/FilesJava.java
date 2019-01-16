@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Julio M. C. Dias
  */
 public class FilesJava implements Serializable{
-    private ArrayList<File> files;
+    private final ArrayList<File> files;
     private String directory;
     private static final long serialVersionUID = 1L;
     

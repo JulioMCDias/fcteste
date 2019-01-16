@@ -31,7 +31,7 @@ public class ViewProgressBar extends javax.swing.JDialog
      * Creates new form ViewProgressBa
      * @param parent
      * @param modal
-     * @param numberFiles
+     * @param filesJ
      * @param listCA
      */
     public ViewProgressBar(java.awt.Frame parent, boolean modal ,FilesJava filesJ , AnalyzerFiles listCA) {

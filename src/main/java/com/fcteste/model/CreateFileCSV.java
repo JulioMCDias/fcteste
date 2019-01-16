@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,7 +45,7 @@ public class CreateFileCSV implements Serializable {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Erro ao gerar o arquivo .csv");
         } finally {
             try {
                 if (output != null) {
@@ -52,7 +53,7 @@ public class CreateFileCSV implements Serializable {
                 }
             } catch (IOException e) {
             }
-
+            JOptionPane.showMessageDialog(null, "Arquivos Gerado com sucesso.");
         }
     }
 }

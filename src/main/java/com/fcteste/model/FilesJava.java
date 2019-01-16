@@ -6,15 +6,16 @@
 package com.fcteste.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *
  * @author Julio M. C. Dias
  */
-public class FilesJava {
+public class FilesJava implements Serializable{
     private ArrayList<File> files;
     private String directory;
-    
+    private static final long serialVersionUID = 1L;
     
     public FilesJava(String directory) {
         this.directory = directory;
@@ -51,7 +52,7 @@ public class FilesJava {
 
     private boolean getFileExtensionJava(File file) {
         String fileName = file.getName();
-        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0 &&
+        if(fileName.lastIndexOf('.') != -1 && fileName.lastIndexOf('.') != 0 &&
                 fileName.matches("^.+[.]java$"))
             return true;
         return false;

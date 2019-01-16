@@ -7,8 +7,11 @@ package com.fcteste.model;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -16,15 +19,15 @@ import java.util.Iterator;
  *
  * @author Julio M. C. Dias
  */
-public class CreateFileCSV {
-
+public class CreateFileCSV implements Serializable {
+    private static final long serialVersionUID = 1L;
     public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA, ArrayList<String> lFName) {
         BufferedWriter output = null;
         Iterator<CodeAnalyzer> iCA = cA.iterator();
         Iterator<String> iLFN = lFName.iterator();
         CodeAnalyzer cAna;
         try {
-            output = new BufferedWriter(new FileWriter(file));
+            output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset()));
             output.write("Name,SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
 
             while (iCA.hasNext() && iLFN.hasNext()) {

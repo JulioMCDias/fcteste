@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  */
 public class ViewMain extends javax.swing.JFrame {
     private final ControllView cView;
-    private DefaultListModel dlm;
+    private final DefaultListModel dlm;
     /**
      * Creates new form ViewPrincipal
      * @param cView
@@ -171,7 +171,7 @@ public class ViewMain extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(306, 306, 306))
+                                .addGap(360, 360, 360))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel1)

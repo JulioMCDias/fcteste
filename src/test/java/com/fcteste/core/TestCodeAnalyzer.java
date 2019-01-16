@@ -80,7 +80,7 @@ public class TestCodeAnalyzer {
             + "}";
 
     @Test
-    public void StringVoid() {
+    public void stringVoid() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(8, code.count.getOperator());

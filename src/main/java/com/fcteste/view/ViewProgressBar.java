@@ -10,6 +10,7 @@ import com.fcteste.model.FilesJava;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
@@ -114,7 +115,7 @@ public class ViewProgressBar extends javax.swing.JDialog
     // End of variables declaration//GEN-END:variables
 
 
-       private class Task extends SwingWorker<Void, Void> {
+       private class Task extends SwingWorker<Void, Void> implements Serializable{
 
         /*
          * Main task. Executed in background thread.

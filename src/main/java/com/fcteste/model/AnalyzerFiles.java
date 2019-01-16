@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,8 +20,8 @@ import java.util.logging.Logger;
  *
  * @author Julio M. C. Dias
  */
-public class AnalyzerFiles {
-
+public class AnalyzerFiles implements Serializable{
+    private static final long serialVersionUID = 1L;
     private ArrayList<CodeAnalyzer> listCAnalyzer;
 
     public AnalyzerFiles() {

@@ -6,6 +6,7 @@ import com.fcteste.model.FilesJava;
 import com.fcteste.view.ViewMain;
 import com.fcteste.view.ViewProgressBar;
 import java.io.File;
+import java.io.Serializable;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -13,8 +14,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Julio M. C. Dias
  */
-public class ControllView {
 
+public class ControllView implements Serializable{
+    private static final long serialVersionUID = 1L;
     private static ControllView cView;
     private static ViewMain vMain;
     private FilesJava filesJ;
@@ -40,13 +42,7 @@ public class ControllView {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         /* Create and display the form */
@@ -98,7 +94,7 @@ public class ControllView {
         int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
         int[] listjTF = new int[6];
 
-        if (listFilesSelected != null && analyFiles != null) {
+        if (analyFiles != null) {
             for (int fileSele : listFilesSelected) {
                 listjTF[0] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethod();
                 listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethodCall();
@@ -119,21 +115,22 @@ public class ControllView {
     }
 
     public void creatCSV() {
+        if(analyFiles != null && filesJ != null){
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.setDialogTitle("Salvar projeto CSV");
+            chooser.setSelectedFile(new File("projeto.csv"));
 
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.setDialogTitle("Salvar projeto CSV");
-        chooser.setSelectedFile(new File("projeto.csv"));
+            FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
+            // add filters
+            chooser.addChoosableFileFilter(csvFilter);
+            chooser.setFileFilter(csvFilter);
 
-        FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
-        // add filters
-        chooser.addChoosableFileFilter(csvFilter);
-        chooser.setFileFilter(csvFilter);
-
-        chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
-        if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
-            cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer(), filesJ.getFilesName());
+            chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
+            if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
+                cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer(), filesJ.getFilesName());
+            }
         }
     }
 

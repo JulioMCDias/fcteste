@@ -10,12 +10,15 @@ import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CodeAnalyzer {
-
-    public class Count {
-
+public class CodeAnalyzer implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
+    
+    public static class Count implements Serializable {
+        private static final long serialVersionUID = 1L;
         private int operator = 0;
         private int operatorOnly = 0;
         private int operating = 0;
@@ -30,7 +33,7 @@ public class CodeAnalyzer {
         private void operatorOnlyAdd(String op) {
             if (!l.contains(op)) {
                 l.add(op);
-                count.operatorOnly++;
+                operatorOnly++;
             }
         }
 
@@ -60,9 +63,10 @@ public class CodeAnalyzer {
 
     };
 
-    public Count count = new Count();
+    public final Count count;
 
     public CodeAnalyzer(InputStream in) {
+         count = new Count();
         CompilationUnit cu = JavaParser.parse(in);
         cu.accept(new MethodVisitor(), null);
     }

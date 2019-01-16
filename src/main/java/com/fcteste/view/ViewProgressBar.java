@@ -18,39 +18,36 @@ import javax.swing.SwingWorker;
  *
  * @author Julio M. C. Dias
  */
-public class ViewProgressBar extends javax.swing.JDialog 
+public class ViewProgressBar extends javax.swing.JDialog
         implements PropertyChangeListener {
 
-    
     private final Task task;
     private final FilesJava filesJ;
     private final AnalyzerFiles listCA;
-    
-    
+
     /**
      * Creates new form ViewProgressBa
+     *
      * @param parent
      * @param modal
      * @param filesJ
      * @param listCA
      */
-    public ViewProgressBar(java.awt.Frame parent, boolean modal ,FilesJava filesJ , AnalyzerFiles listCA) {
+    public ViewProgressBar(java.awt.Frame parent, boolean modal, FilesJava filesJ, AnalyzerFiles listCA) {
         super(parent, modal);
         this.filesJ = filesJ;
         this.listCA = listCA;
         initComponents();
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); 
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         jProgressBar.setIndeterminate(true);
         task = new Task();
         task.addPropertyChangeListener(this);
         task.execute();
     }
-    
-    
-
 
     /**
      * Invoked when task's progress property changes.
+     *
      * @param evt
      */
     @Override
@@ -62,7 +59,6 @@ public class ViewProgressBar extends javax.swing.JDialog
             jLabel1.setText(String.format("Processando... %d de %d", listCA.getListCAnalyzer().size(), filesJ.getFiles().size()));
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,28 +110,32 @@ public class ViewProgressBar extends javax.swing.JDialog
     private javax.swing.JProgressBar jProgressBar;
     // End of variables declaration//GEN-END:variables
 
-
-       private class Task extends SwingWorker<Void, Void> implements Serializable{
+    private class Task extends SwingWorker<Void, Void> implements Serializable {
 
         /*
          * Main task. Executed in background thread.
          */
         @Override
         public Void doInBackground() {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) { }
+
+            do {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {}
+
+            } while (filesJ.isReading());
+
             while (listCA.getListCAnalyzer().size() < filesJ.getFiles().size()) {
                 //Sleep
                 try {
                     Thread.sleep(100);
-                } catch (InterruptedException ignore) { }
-                setProgress((listCA.getListCAnalyzer().size()*100)/filesJ.getFiles().size());
+                } catch (InterruptedException ignore) {}
+                setProgress((listCA.getListCAnalyzer().size() * 100) / filesJ.getFiles().size());
             }
             setVisible(false);
             return null;
         }
- 
+
         /*
          * Executed in event dispatch thread
          */
@@ -145,6 +145,5 @@ public class ViewProgressBar extends javax.swing.JDialog
             setVisible(false);
         }
     }
-       
-       
+
 }

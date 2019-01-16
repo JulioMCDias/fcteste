@@ -16,6 +16,7 @@ public class FilesJava implements Serializable{
     private final ArrayList<File> files;
     private String directory;
     private static final long serialVersionUID = 1L;
+    private boolean reading = false;
     
     public FilesJava(String directory) {
         this.directory = directory;
@@ -28,7 +29,9 @@ public class FilesJava implements Serializable{
     
     
     public void findFiles(){
+        reading = true;
         listf(directory, files);
+        reading = false;
     }
     
     
@@ -77,6 +80,10 @@ public class FilesJava implements Serializable{
             lFName.add(file.getName());
         }
         return lFName;
+    }
+
+    public boolean isReading() {
+        return reading;
     }
     
     public void cleanArrayFiles(){

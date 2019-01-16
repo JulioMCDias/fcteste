@@ -32,11 +32,7 @@ public class ControllView implements Serializable {
 
     public static void main(String args[]) {
         cView = new ControllView();
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -48,12 +44,10 @@ public class ControllView implements Serializable {
             java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                vMain = new ViewMain(cView);
-                vMain.setLocationRelativeTo(null);
-                vMain.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            vMain = new ViewMain(cView);
+            vMain.setLocationRelativeTo(null);
+            vMain.setVisible(true);
         });
 
     }
@@ -62,12 +56,9 @@ public class ControllView implements Serializable {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                filesJ.findFiles();
-                analyFiles.applyAnaly(filesJ);
-            }
+        new Thread(() -> {
+            filesJ.findFiles();
+            analyFiles.applyAnaly(filesJ);
         }).start();
 
         vPBar = new ViewProgressBar(vMain, true, filesJ, analyFiles);

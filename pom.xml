@@ -5,6 +5,7 @@
     <artifactId>fcteste</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -17,11 +18,29 @@
             <artifactId>javaparser-symbol-solver-core</artifactId>
             <version>3.9.1</version>
         </dependency>
-    </dependencies>
+    </dependencies> 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-assembly-plugin</artifactId>
+      <configuration>
+        <archive>
+          <manifest>
+            <mainClass>com.fcteste.controller.ControllView</mainClass>
+          </manifest>
+        </archive>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
 </project>
 

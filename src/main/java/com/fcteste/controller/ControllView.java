@@ -6,15 +6,19 @@ import com.fcteste.model.FilesJava;
 import com.fcteste.view.ViewMain;
 import com.fcteste.view.ViewProgressBar;
 import java.io.File;
+import java.io.Serializable;
 import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.SAVE_DIALOG;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Julio M. C. Dias
  */
-public class ControllView {
+public class ControllView implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private static ControllView cView;
     private static ViewMain vMain;
     private FilesJava filesJ;
@@ -28,11 +32,7 @@ public class ControllView {
 
     public static void main(String args[]) {
         cView = new ControllView();
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -40,22 +40,14 @@ public class ControllView {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ViewMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                vMain = new ViewMain(cView);
-                vMain.setLocationRelativeTo(null);
-                vMain.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            vMain = new ViewMain(cView);
+            vMain.setLocationRelativeTo(null);
+            vMain.setVisible(true);
         });
 
     }
@@ -98,7 +90,7 @@ public class ControllView {
         int listFilesSelected[] = vMain.getjListArq().getSelectedIndices();
         int[] listjTF = new int[6];
 
-        if (listFilesSelected != null && analyFiles != null) {
+        if (analyFiles != null) {
             for (int fileSele : listFilesSelected) {
                 listjTF[0] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethod();
                 listjTF[1] += analyFiles.getListCAnalyzer().get(fileSele).count.getMethodCall();
@@ -119,21 +111,44 @@ public class ControllView {
     }
 
     public void creatCSV() {
+        if (analyFiles != null && filesJ != null) {
+            JFileChooser chooser = new JFileChooser() {
+                @Override
+                public void approveSelection() {
+                    File f = getSelectedFile();
+                    if (f.exists() && getDialogType() == SAVE_DIALOG) {
+                        int result = JOptionPane.showConfirmDialog(this, "O arquivo já existe, deseja sobrescrever?", "Arquivo existente", JOptionPane.YES_NO_CANCEL_OPTION);
+                        switch (result) {
+                            case JOptionPane.YES_OPTION:
+                                super.approveSelection();
+                                return;
+                            case JOptionPane.NO_OPTION:
+                                return;
+                            case JOptionPane.CLOSED_OPTION:
+                                return;
+                            case JOptionPane.CANCEL_OPTION:
+                                cancelSelection();
+                                return;
+                        }
+                    }
+                    super.approveSelection();
+                }
 
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        chooser.setDialogTitle("Salvar projeto CSV");
-        chooser.setSelectedFile(new File("projeto.csv"));
+            };
+            //chooser.setCurrentDirectory(new java.io.File("."));
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.setDialogTitle("Salvar projeto CSV");
+            chooser.setSelectedFile(new File("projeto.csv"));
 
-        FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
-        // add filters
-        chooser.addChoosableFileFilter(csvFilter);
-        chooser.setFileFilter(csvFilter);
+            FileNameExtensionFilter csvFilter = new FileNameExtensionFilter("csv files (*.csv)", "CSV");
+            // add filters
+            chooser.addChoosableFileFilter(csvFilter);
+            chooser.setFileFilter(csvFilter);
 
-        chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
-        if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
-            cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer());
+            chooser.setAcceptAllFileFilterUsed(false);  // disable the "All files" option.
+            if (chooser.showSaveDialog(vMain) == JFileChooser.APPROVE_OPTION) {
+                cfCSV.creatFileCSV(chooser.getSelectedFile(), analyFiles.getListCAnalyzer(), filesJ.getFilesName());
+            }
         }
     }
 

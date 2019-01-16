@@ -35,13 +35,13 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" pref="92" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="306" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="360" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTFlocalProjeto" min="-2" pref="571" max="-2" attributes="0"/>
+                              <Component id="jTFlocalProjeto" min="-2" pref="559" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jbtnProcurar" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -62,18 +62,20 @@
                               <Component id="jSeparator2" min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="1" attributes="0">
                                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jTFOperadoresUni" min="-2" pref="60" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -81,27 +83,23 @@
                                               <Component id="jTfQtMetodos" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jTFOperadoresTotais" min="-2" pref="50" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                                      <Component id="jTFLinComando" min="-2" pref="50" max="-2" attributes="0"/>
-                                                  </Group>
+                                                  <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jTFOperadoresTotais" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
+                                                  <Component id="jTFOperandos" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jTFOperandos" min="-2" pref="50" max="-2" attributes="0"/>
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jTFLinComando" min="-2" pref="50" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -231,7 +229,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="N. L. Total:"/>
+        <Property name="text" type="java.lang.String" value="Numero de Linhas:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
@@ -282,7 +280,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="N. L. Comando:"/>
+        <Property name="text" type="java.lang.String" value="Chamada de metodos:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFLinComando">
@@ -301,7 +299,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbtnAnalizarProjeto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Analizar Projeto"/>
+        <Property name="text" type="java.lang.String" value="Analisar Projeto"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnAnalizarProjetoActionPerformed"/>
@@ -319,7 +317,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Q. Operandos:"/>
+        <Property name="text" type="java.lang.String" value="Operandos:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFOperandos">
@@ -330,7 +328,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Q. Metodos:"/>
+        <Property name="text" type="java.lang.String" value="Defini&#xe7;&#xe3;o de metodos:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTfQtMetodos">
@@ -341,7 +339,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Q. Operador. Unit&#xe1;rios:"/>
+        <Property name="text" type="java.lang.String" value="Operador. Unit&#xe1;rios:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFOperadoresUni">
@@ -352,7 +350,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Q. Operador. Totais:"/>
+        <Property name="text" type="java.lang.String" value="Operador. Totais:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFOperadoresTotais">

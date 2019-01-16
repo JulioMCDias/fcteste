@@ -7,35 +7,45 @@ package com.fcteste.model;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Julio M. C. Dias
  */
-public class CreateFileCSV {
-
-    public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA) {
+public class CreateFileCSV implements Serializable {
+    private static final long serialVersionUID = 1L;
+    public void creatFileCSV(File file, ArrayList<CodeAnalyzer> cA, ArrayList<String> lFName) {
         BufferedWriter output = null;
+        Iterator<CodeAnalyzer> iCA = cA.iterator();
+        Iterator<String> iLFN = lFName.iterator();
+        CodeAnalyzer cAna;
         try {
-            output = new BufferedWriter(new FileWriter(file));
-            output.write("SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
+            output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset()));
+            output.write("Name,SLOC,Method,MethodCall,Operator,OperatorOnly,Operating,\n");
 
-            for (CodeAnalyzer codeAnalyzer : cA) {
+            while (iCA.hasNext() && iLFN.hasNext()) {
+                cAna = iCA.next();
                 output.write(
-                        codeAnalyzer.count.getLineNumber() + ","
-                        + codeAnalyzer.count.getMethod() + ","
-                        + codeAnalyzer.count.getMethodCall() + ","
-                        + codeAnalyzer.count.getOperator() + ","
-                        + codeAnalyzer.count.getOperatorOnly() + ","
-                        + codeAnalyzer.count.getOperating() + "\n"
+                        iLFN.next() + ","
+                        + cAna.count.getLineNumber() + ","
+                        + cAna.count.getMethod() + ","
+                        + cAna.count.getMethodCall() + ","
+                        + cAna.count.getOperator() + ","
+                        + cAna.count.getOperatorOnly() + ","
+                        + cAna.count.getOperating() + "\n"
                 );
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Erro ao gerar o arquivo .csv");
         } finally {
             try {
                 if (output != null) {
@@ -43,7 +53,7 @@ public class CreateFileCSV {
                 }
             } catch (IOException e) {
             }
-
+            JOptionPane.showMessageDialog(null, "Arquivos Gerado com sucesso.");
         }
     }
 }

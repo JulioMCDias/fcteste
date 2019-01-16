@@ -121,7 +121,7 @@ public class ViewMain extends javax.swing.JFrame {
             }
         });
 
-        jbtnAnalizarProjeto.setText("Analizar Projeto");
+        jbtnAnalizarProjeto.setText("Analisar Projeto");
         jbtnAnalizarProjeto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnAnalizarProjetoActionPerformed(evt);

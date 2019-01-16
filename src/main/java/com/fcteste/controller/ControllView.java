@@ -56,9 +56,12 @@ public class ControllView implements Serializable {
         analyFiles = new AnalyzerFiles();
         filesJ = new FilesJava(directory);
 
-        new Thread(() -> {
-            filesJ.findFiles();
-            analyFiles.applyAnaly(filesJ);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                filesJ.findFiles();
+                analyFiles.applyAnaly(filesJ);
+            }
         }).start();
 
         vPBar = new ViewProgressBar(vMain, true, filesJ, analyFiles);

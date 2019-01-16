@@ -63,6 +63,8 @@ public class TestCodeAnalyzer {
             + "        else{\n"
             + "            c=10;\n"
             + "        }\n"
+            + "        t2();\n"
+            + "        t1();\n"
             + "    }\n"
             + "    \n"
             + "    private void t1(int s) {\n"
@@ -80,10 +82,38 @@ public class TestCodeAnalyzer {
             + "}";
 
     @Test
-    public void stringVoid() {
+    public void operatorTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(8, code.count.getOperator());
+    }
+    
+    @Test
+    public void operatorOnlyTest() {
+        InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
+        CodeAnalyzer code = new CodeAnalyzer(is);
+        assertEquals(3, code.count.getOperatorOnly());
+    }
+
+    @Test
+    public void methodTest() {
+        InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
+        CodeAnalyzer code = new CodeAnalyzer(is);
+        assertEquals(3, code.count.getMethod());
+    }
+
+    @Test
+    public void methodCallTest() {
+        InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
+        CodeAnalyzer code = new CodeAnalyzer(is);
+        assertEquals(2, code.count.getMethodCall());
+    }
+
+    @Test
+    public void operatingTest() {
+        InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
+        CodeAnalyzer code = new CodeAnalyzer(is);
+        assertEquals(16, code.count.getOperating());
     }
 
 }

@@ -82,35 +82,35 @@ public class TestCodeAnalyzer {
             + "}";
 
     @Test
-    public void Operator() {
+    public void operatorTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(8, code.count.getOperator());
     }
     
     @Test
-    public void OperatorOnly() {
+    public void operatorOnlyTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(3, code.count.getOperatorOnly());
     }
 
     @Test
-    public void Method() {
+    public void methodTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(3, code.count.getMethod());
     }
 
     @Test
-    public void MethodCall() {
+    public void methodCallTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(2, code.count.getMethodCall());
     }
 
     @Test
-    public void Operating() {
+    public void operatingTest() {
         InputStream is = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
         CodeAnalyzer code = new CodeAnalyzer(is);
         assertEquals(16, code.count.getOperating());
